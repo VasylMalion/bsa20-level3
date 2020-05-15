@@ -1,11 +1,11 @@
 const { user } = require('../models/user');
 const { check, validationResult } = require('express-validator');
 const {isEmail, isEmpty, isPhoneNumber, minLength} = require("./validation");
-
+const { User } = require('../models/user');
 const createUserValid = (req, res, next) => {
 
     const data = req.body;
-    validUser(data);
+    validUser(data, res);
 
     next();
 };
@@ -13,7 +13,7 @@ const createUserValid = (req, res, next) => {
 const updateUserValid = (req, res, next) => {
 
     const data = req.body;
-    validUser(data);
+    validUser(data, res);
 
     next();
 };
@@ -29,7 +29,7 @@ const checkUserValid = (data) => {
     return
 };
 
-const validUser = (data) => {
+const validUser = (data, res) => {
     let errors = [];
 
     if (isEmpty(data.firstName)) {

@@ -1,7 +1,6 @@
 const { dbAdapter } = require('../config/db');
 const { v4 } = require('uuid');
 
-
 class BaseRepository {
     constructor(collectionName) {
         this.dbContext = dbAdapter.get(collectionName);

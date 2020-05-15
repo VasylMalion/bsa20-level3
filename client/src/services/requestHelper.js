@@ -31,7 +31,7 @@ const makeRequest = async (path, method, body) => {
             return dataObj;
         }
 
-        alert(`${dataObj.message}`);
+        // alert(`${dataObj.message}`);
         return dataObj;
     } catch (err) {
         console.error(err);

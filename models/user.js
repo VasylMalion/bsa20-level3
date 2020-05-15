@@ -7,13 +7,5 @@ class User {
         this.password = password;
     }
 }
-// exports.User = {
-//   id: Number, // userID
-//   firstName: String, // userFirstName
-//   lastName: String, // userLastName
-//   email: String, // userEmail
-//   phoneNumber: String, // userNumber
-//   password: String, // userPassword
-// };
 
 module.exports.User = User;

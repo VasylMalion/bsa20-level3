@@ -10,7 +10,7 @@ class UserService {
         return items
     }
 
-    search(search) {
+    searchUser(search) {
         const item = UserRepository.getOne(search);
         if(!item) {
             return null;

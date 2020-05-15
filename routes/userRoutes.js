@@ -2,41 +2,36 @@ const { Router } = require('express');
 const UserService = require('../services/userService');
 const { createUserValid, updateUserValid } = require('../middlewares/user.validation.middleware');
 const { responseMiddleware } = require('../middlewares/response.middleware');
+const User = require('../models/user').User;
 
 const router = Router();
 
-// TODO: Implement route controllers for user
-
 router.get('/', (req, res) => {
-    const users = UserService.getAllUsers();
-    if (users) {
-        res.json(users);
+    const allUsers = UserService.getAllUsers();
+    if (allUsers) {
+        res.json(allUsers);
     } else {
         res.json(400).json({
             error: true,
-            message: 'No users in db',
+            message: 'No users',
         });
     }
 });
 
-// @route GET /api/users/:id
-// @desc Returns specific user by id
 router.get('/:id', (req, res) => {
-    const id = req.params.id;
-    const foundUser = UserService.search({ id });
-    if (foundUser) {
-        res.json(foundUser);
+    const userId = req.params.id;
+    const findUser = UserService.searchUser({ userId });
+    if (findUser) {
+        res.json(findUser);
     } else {
         res.status(404).json({
             error: true,
-            message: 'No user with such id',
+            message: 'There is no such user',
         });
     }
 });
 
-// @route POST /api/users
-// @desc Creates user
-router.post('/', createUserValid, (req, res) => {
+router.post('/', (req, res) => {
     const user = new User(req.body);
     const result = UserService.createUser(user);
     if (result) {
@@ -44,38 +39,34 @@ router.post('/', createUserValid, (req, res) => {
     } else {
         res.status(400).json({
             error: true,
-            message: 'Error has occured',
+            message: 'Error creating',
         });
     }
 });
 
-// @route PUT /api/users/:id
-// @desc Updates user information details
-router.put('/:id', updateUserValid, (req, res) => {
-    const id = req.params.id;
-    const userInfo = req.body;
-    const updatedUser = UserService.updateUser(id, userInfo);
+router.put('/:id', (req, res) => {
+    const userId = req.params.id;
+    const userData = req.body;
+    const updatedUser = UserService.updateUser(userId, userData);
     if (updatedUser) {
         res.json(updatedUser);
     } else {
         res.status(404).json({
             error: true,
-            message: 'No user with such id',
+            message: 'There is no such user',
         });
     }
 });
 
-// @route DELETE /api/users/:id
-// @desc Removes user from db by id
 router.delete('/:id', (req, res) => {
-    const id = req.params.id;
-    const deletedUser = UserService.deleteUser(id);
+    const userId = req.params.id;
+    const deletedUser = UserService.deleteUser(userId);
     if (deletedUser) {
         res.json(deletedUser);
     } else {
         res.status(404).json({
             error: true,
-            message: 'No user with such id',
+            message: 'There is no such user',
         });
     }
 });

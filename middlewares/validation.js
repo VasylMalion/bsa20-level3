@@ -19,11 +19,16 @@ const minLength = (num, min) => {
     return num.length >= min;
 };
 
-const maxLength = (num, max) => {
-    if (num === '') {
-        return false
-    }
-    return num.length <= max;
+const maxNum = (value, max) => {
+    return Number(value) <= max;
+};
+
+const minNum = (value, min) => {
+    return Number(value) >= min;
+};
+
+const typeData = (data) => {
+    return typeof data === "number"
 };
 
 module.exports = {
@@ -31,5 +36,7 @@ module.exports = {
     isEmpty,
     isPhoneNumber,
     minLength,
-    maxLength
+    maxNum,
+    minNum,
+    typeData
 };
