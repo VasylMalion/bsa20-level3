@@ -2,16 +2,16 @@ const { Router } = require('express');
 const UserService = require('../services/userService');
 const { createUserValid, updateUserValid } = require('../middlewares/user.validation.middleware');
 const { responseMiddleware } = require('../middlewares/response.middleware');
-const User = require('../models/user').User;
+const User = require('../models/user');
 
 const router = Router();
 
 router.get('/', (req, res) => {
     const allUsers = UserService.getAllUsers();
     if (allUsers) {
-        res.json(allUsers);
+        return res.json(allUsers);
     } else {
-        res.json(400).json({
+        return res.json(400).json({
             error: true,
             message: 'No users',
         });
@@ -22,16 +22,16 @@ router.get('/:id', (req, res) => {
     const userId = req.params.id;
     const findUser = UserService.searchUser({ userId });
     if (findUser) {
-        res.json(findUser);
+        return res.json(findUser);
     } else {
-        res.status(404).json({
+        return res.status(404).json({
             error: true,
             message: 'There is no such user',
         });
     }
 });
 
-router.post('/', (req, res) => {
+router.post('/', createUserValid, (req, res) => {
     const user = new User(req.body);
     const result = UserService.createUser(user);
     if (result) {
@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
     }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', updateUserValid, (req, res) => {
     const userId = req.params.id;
     const userData = req.body;
     const updatedUser = UserService.updateUser(userId, userData);

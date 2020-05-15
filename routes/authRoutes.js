@@ -5,22 +5,22 @@ const { userValidation } = require('../middlewares/user.validation.middleware');
 
 const router = Router();
 
-router.post('/login', (req, res, next) => {
-
+router.post('/login',  (req, res, next) => {
     try {
         const email = req.body.email;
         const password = req.body.email;
+
         const user = AuthService.login({email});
         if(!user) {
-            res.status(401).send({
+            return res.status(401).send({
                 error: true,
                 message: "1"
             });
         }
         if (password === user.password) {
-            res.json(user);
+            return res.json(user);
         } else {
-            res.status(401).js({
+            return res.status(401).js({
                 error: true,
                 message: "2"
             });

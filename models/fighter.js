@@ -1,10 +1,10 @@
 class Fighter {
-    constructor({ name, health, power, defense }) {
+    constructor({ name, power, defense }) {
         this.name = name;
-        this.health = Number(health);
+        this.health = 100;
         this.power = Number(power);
         this.defense = Number(defense);
     }
 }
 
-module.exports.Fighter = Fighter;
+module.exports = Fighter;
