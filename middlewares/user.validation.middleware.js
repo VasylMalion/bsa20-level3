@@ -1,6 +1,5 @@
 const { user } = require('../models/user');
 const {isEmail, isEmpty, isPhoneNumber, minLength} = require("./validation");
-const { User } = require('../models/user');
 
 const createUserValid = (req, res, next) => {
 

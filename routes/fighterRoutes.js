@@ -2,7 +2,7 @@ const { Router } = require('express');
 const FighterService = require('../services/fighterService');
 const { responseMiddleware } = require('../middlewares/response.middleware');
 const { createFighterValid, updateFighterValid } = require('../middlewares/fighter.validation.middleware');
-const {Fighter} = require('../models/fighter');
+const Fighter = require('../models/fighter');
 
 const router = Router();
 
@@ -31,9 +31,9 @@ router.get('/:id', (req, res) => {
     }
 });
 
-router.post('/', (req, res) => {
-    const user = new Fighter(req.body);
-    const result = FighterService.createFighter(user);
+router.post('/', createFighterValid, (req, res) => {
+    const fighter = new Fighter(req.body);
+    const result = FighterService.createFighter(fighter);
     if (result) {
         res.json(result);
     } else {
@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
     }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', updateFighterValid, (req, res) => {
     const fighterId = req.params.id;
     const fighterData = req.body;
     const updatedFighter = FighterService.updateFighter(fighterId, fighterData);
@@ -60,9 +60,9 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
     const fighterId = req.params.id;
-    const deletedUser = FighterService.deleteFighter(fighterId);
-    if (deletedUser) {
-        res.json(deletedUser);
+    const deletedFighter = FighterService.deleteFighter(fighterId);
+    if (deletedFighter) {
+        res.json(deletedFighter);
     } else {
         res.status(404).json({
             error: true,

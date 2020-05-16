@@ -8,7 +8,7 @@ const router = Router();
 router.post('/login',  (req, res, next) => {
     try {
         const email = req.body.email;
-        const password = req.body.email;
+        const password = req.body.password;
 
         const user = AuthService.login({email});
         if(!user) {
